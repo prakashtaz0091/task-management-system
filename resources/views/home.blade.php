@@ -28,13 +28,22 @@
             </div>
         @endif
         <br>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#signupForm">
-            Signup
-        </button>
-        <button type="button" class="btn btn-success text-light btn-lg" data-bs-toggle="modal" data-bs-target="#loginForm">
-            Login
-        </button>
+        @if (Auth::check())
+            <p>Welcome, {{ Auth::user()->name }}</p>
+            <a href="{{ route('logout') }}" type="button" class="btn btn-danger text-light btn-lg">
+                Logout
+            </a>
+        @else
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#signupForm">
+                Signup
+            </button>
+            <button type="button" class="btn btn-success text-light btn-lg" data-bs-toggle="modal"
+                data-bs-target="#loginForm">
+                Login
+            </button>
+        @endif
+
 
         <!-- Modal -->
     <div class="modal fade" id="loginForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -55,14 +64,20 @@
                                 name="email">
                             <label for="login_email">Email address</label>
                         </div>
+                        @error('email')
+                            {{ $message }}
+                        @enderror
                         <div class="form-floating mb-3 password-field-3">
-                            <input type="password" class="form-control" name="password" id="login_password"
+                            <input type="password" minlength="6" class="form-control" name="password" id="login_password"
                                 placeholder="Password">
                             <label for="login_password">Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
                             <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"
                                 width="40">
                         </div>
+                        @error('password')
+                            {{ $message }}
+                        @enderror
 
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
@@ -85,9 +100,9 @@
                     <form action="{{ url('signup') }}" class="mb-3" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" minlength="6" name="name" class="form-control" id="floatingInput"
+                            <input type="text" minlength="6" name="name" class="form-control" id="name"
                                 placeholder="Full name">
-                            <label for="floatingInput">Name</label>
+                            <label for="name">Name</label>
                         </div>
                         @error('name')
                             {{ $message }}
@@ -101,7 +116,7 @@
                             {{ $message }}
                         @enderror
                         <div class="form-floating mb-3 password-field-1">
-                            <input type="password" name="password" class="form-control" id="password"
+                            <input type="password" minlength="6" name="password" class="form-control" id="password"
                                 placeholder="Password">
                             <label for="password">Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
@@ -113,7 +128,7 @@
                         @enderror
                         <div class="form-floating mb-3 password-field-2">
                             <input type="password" name="password_confirmation" class="form-control"
-                                id="confirm_password" placeholder="Confirm Password">
+                                id="confirm_password" minlength="6" placeholder="Confirm Password">
                             <label for="confirm_password">Confirm Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
                             <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"

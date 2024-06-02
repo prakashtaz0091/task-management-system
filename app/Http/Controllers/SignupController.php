@@ -13,8 +13,8 @@ class SignupController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required',
+            'password' => 'required|confirmed|min:6',
+            'password_confirmation' => 'required|min:6',
         ]);
 
         $user = new User();
