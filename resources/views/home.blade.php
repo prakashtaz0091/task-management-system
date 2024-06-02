@@ -2,7 +2,8 @@
 
 @section('internal-styles')
     <style>
-        .password-field {
+        .password-field-1,
+        .password-field-2 {
             position: relative;
 
             img {
@@ -44,11 +45,14 @@
                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Email address</label>
                         </div>
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-3 password-field-1">
                             <input type="password" class="form-control" id="password" placeholder="Password">
                             <label for="password">Password</label>
+                            <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
+                            <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"
+                                width="40">
                         </div>
-                        <div class="form-floating mb-3 password-field">
+                        <div class="form-floating mb-3 password-field-2">
                             <input type="password" class="form-control" id="confirm_password"
                                 placeholder="Confirm Password">
                             <label for="confirm_password">Confirm Password</label>
@@ -71,16 +75,24 @@
     <script>
         const password = document.querySelector('#password');
         const confirm_password = document.querySelector('#confirm_password');
-        const eye = document.querySelector('.password-field img');
-        eye.addEventListener('click', () => {
-            if (password.type === 'password' && confirm_password.type === 'password') {
+        const eye1 = document.querySelector('.password-field-1 img');
+        const eye2 = document.querySelector('.password-field-2 img');
+        eye1.addEventListener('click', () => {
+            if (password.type === 'password') {
                 password.type = 'text';
-                confirm_password.type = 'text';
-                eye.src = "{{ url('images/eye-close.png') }}";
+                eye1.src = "{{ url('images/eye-close.png') }}";
             } else {
                 password.type = 'password';
+                eye1.src = "{{ url('images/eye.gif') }}";
+            }
+        });
+        eye2.addEventListener('click', () => {
+            if (confirm_password.type === 'password') {
+                confirm_password.type = 'text';
+                eye2.src = "{{ url('images/eye-close.png') }}";
+            } else {
                 confirm_password.type = 'password';
-                eye.src = "{{ url('images/eye.gif') }}";
+                eye2.src = "{{ url('images/eye.gif') }}";
             }
         });
     </script>
