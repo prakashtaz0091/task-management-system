@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index()
+
+    public function login(Request $request)
     {
-        echo "hello";
-        // return view('login');
+        return view('login');
     }
 }

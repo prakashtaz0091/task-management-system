@@ -22,8 +22,12 @@
     <p class="lead">A Task Management System is a software application that helps manage tasks, projects, and
         workflows.</p>
     <p class="lead">
-
-
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        <br>
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-light text-dark btn-lg" data-bs-toggle="modal" data-bs-target="#signupForm">
             Signup
@@ -44,14 +48,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-dark">
-                    <form action="" class="mb-3" method="POST">
+                    <form action="{{ route('login') }}" class="mb-3" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="login_email" placeholder="name@example.com">
+                            <input type="email" class="form-control" id="login_email" placeholder="name@example.com"
+                                name="email">
                             <label for="login_email">Email address</label>
                         </div>
                         <div class="form-floating mb-3 password-field-3">
-                            <input type="password" class="form-control" id="login_password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" id="login_password"
+                                placeholder="Password">
                             <label for="login_password">Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
                             <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"
@@ -76,27 +82,46 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-dark">
-                    <form action="" class="mb-3" method="POST">
+                    <form action="{{ url('signup') }}" class="mb-3" method="POST">
                         @csrf
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" minlength="6" name="name" class="form-control" id="floatingInput"
+                                placeholder="Full name">
+                            <label for="floatingInput">Name</label>
+                        </div>
+                        @error('name')
+                            {{ $message }}
+                        @enderror
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email" class="form-control" id="floatingInput"
+                                placeholder="name@example.com">
                             <label for="floatingInput">Email address</label>
                         </div>
+                        @error('email')
+                            {{ $message }}
+                        @enderror
                         <div class="form-floating mb-3 password-field-1">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="password"
+                                placeholder="Password">
                             <label for="password">Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
                             <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"
                                 width="40">
                         </div>
+                        @error('password')
+                            {{ $message }}
+                        @enderror
                         <div class="form-floating mb-3 password-field-2">
-                            <input type="password" class="form-control" id="confirm_password"
-                                placeholder="Confirm Password">
+                            <input type="password" name="password_confirmation" class="form-control"
+                                id="confirm_password" placeholder="Confirm Password">
                             <label for="confirm_password">Confirm Password</label>
                             <img src="{{ url('images/eye.gif') }}" alt="" height="40" width="40">
                             <img class="d-none" src="{{ url('images/eye-close.png') }}" alt="" height="40"
                                 width="40">
                         </div>
+                        @error('confirm_password')
+                            {{ $message }}
+                        @enderror
                         <button type="submit" class="btn btn-primary">Signup</button>
                     </form>
                 </div>
